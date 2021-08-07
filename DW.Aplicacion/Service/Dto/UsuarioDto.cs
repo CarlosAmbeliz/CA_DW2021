@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DW.Aplicacion
+namespace DW.Aplicacion.Service.Dto
 {
-    public class Class1
+    public class UsuarioDto
     {
     }
 }
