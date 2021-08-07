@@ -9,5 +9,6 @@ namespace DW.Dominio.Base
 {
     public interface IContactoRepository : ICrudRepository<ContactoBo>
     {
+        ContactoBo GetById(long id);
     }
 }

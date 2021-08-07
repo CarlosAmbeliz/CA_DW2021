@@ -9,5 +9,6 @@ namespace DW.Infraestructura.Base
 {
     public interface IContactoDao : ICrudDao<Contacto>
     {
+        Contacto GetById(long id);
     }
 }

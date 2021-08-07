@@ -27,6 +27,14 @@ namespace DW.Infraestructura.Dao
             }
         }
 
+        public Contacto GetById(long id)
+        {
+            using (DWEntities context = new DWEntities())
+            {
+                return context.Contacto.Find(id);
+            }
+        }
+
         public Contacto Insert(Contacto entity)
         {
             using (DWEntities context = new DWEntities())

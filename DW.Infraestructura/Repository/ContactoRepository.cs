@@ -2,6 +2,7 @@
 using DW.Dominio.Entidades;
 using DW.Infraestructura.Base;
 using DW.Infraestructura.Dao;
+using DW.Infraestructura.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,22 +21,82 @@ namespace DW.Infraestructura.Repository
 
         public IEnumerable<ContactoBo> GetAll()
         {
-            throw new NotImplementedException();
+            return _contactoDao.GetAll().Select(contacto => new ContactoBo()
+            {
+                Apellidos = contacto.apellidos,
+                Direccion = contacto.direccion,
+                Email = contacto.email,
+                IdContacto = contacto.id_contacto,
+                IdUsuario = contacto.id_usuario,
+                Nombres = contacto.nombres,
+                Telefono= contacto.telefono,
+            }).ToList();
+        }
+
+        public ContactoBo GetById(long id)
+        {
+            var contacto = _contactoDao.GetById(id);
+            if (contacto!= null)
+            {
+                return new ContactoBo()
+                {
+                    Apellidos = contacto.apellidos,
+                    Direccion = contacto.direccion,
+                    Email = contacto.email,
+                    IdContacto = contacto.id_contacto,
+                    IdUsuario = contacto.id_usuario,
+                    Nombres = contacto.nombres,
+                    Telefono = contacto.telefono,
+                };
+            }
+            else
+            {
+                return null;
+            }
         }
 
         public void Modify(ContactoBo entity)
         {
-            throw new NotImplementedException();
+            _contactoDao.Update(new Contacto()
+            {
+                apellidos = entity.Apellidos,
+                direccion = entity.Direccion,
+                email = entity.Email,
+                id_contacto = entity.IdContacto,
+                id_usuario = entity.IdUsuario,
+                nombres = entity.Nombres,
+                telefono = entity.Telefono,
+            });
         }
 
         public void Remove(ContactoBo entity)
         {
-            throw new NotImplementedException();
+            _contactoDao.Delete(new Contacto()
+            {
+                apellidos = entity.Apellidos,
+                direccion = entity.Direccion,
+                email = entity.Email,
+                id_contacto = entity.IdContacto,
+                id_usuario = entity.IdUsuario,
+                nombres = entity.Nombres,
+                telefono = entity.Telefono,
+            });
         }
 
         public ContactoBo Save(ContactoBo entity)
         {
-            throw new NotImplementedException();
+            var contacto = _contactoDao.Insert(new Contacto()
+            {
+                apellidos = entity.Apellidos,
+                direccion = entity.Direccion,
+                email = entity.Email,
+                id_contacto = entity.IdContacto,
+                id_usuario = entity.IdUsuario,
+                nombres = entity.Nombres,
+                telefono = entity.Telefono,
+            });
+            entity.IdContacto = contacto.id_contacto;
+            return entity;
         }
     }
 }

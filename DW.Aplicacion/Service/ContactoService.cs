@@ -1,5 +1,6 @@
 ﻿using DW.Aplicacion.Service.Dto;
 using DW.Dominio.Base;
+using DW.Dominio.Entidades;
 using DW.Infraestructura.Repository;
 using System;
 using System.Collections.Generic;
@@ -16,24 +17,62 @@ namespace DW.Aplicacion.Service
         {
             _contactoRepository = new ContactoRepository();
         }
-        public ContactoDto ObtenerTodos(long idUsuario)
+        public List<ContactoDto> ObtenerTodos(long idUsuario)
         {
-            throw new NotImplementedException();
+            return _contactoRepository.GetAll().Select(contactoEntity => new ContactoDto()
+            {
+                Apellidos = contactoEntity.Apellidos,
+                Direccion = contactoEntity.Direccion,
+                Email = contactoEntity.Email,
+                IdContacto = contactoEntity.IdContacto,
+                IdUsuario = contactoEntity.IdUsuario,
+                Nombres = contactoEntity.Nombres,
+                Telefono = contactoEntity.Telefono,
+            }).ToList();
         }
 
         public ContactoDto ObtenerPorId(long idContacto)
         {
-            throw new NotImplementedException();
+            var contactoEntity = _contactoRepository.GetById(idContacto);
+            if (contactoEntity == null)
+            {
+                throw new Exception("El contacto no existe");
+            }
+            return new ContactoDto()
+            {
+                Apellidos = contactoEntity.Apellidos,
+                Direccion = contactoEntity.Direccion,
+                Email = contactoEntity.Email,
+                IdContacto = contactoEntity.IdContacto,
+                IdUsuario = contactoEntity.IdUsuario,
+                Nombres = contactoEntity.Nombres,
+                Telefono = contactoEntity.Telefono,
+            };
         }
 
-        public ContactoDto Actualizar(string idUsuario, ContactoDto contacto)
+        public void Actualizar(ContactoDto contacto)
         {
-            throw new NotImplementedException();
+            var contactoEntity = new ContactoBo()
+            {
+                Apellidos = contacto.Apellidos,
+                Direccion = contacto.Direccion,
+                Email = contacto.Email,
+                IdContacto = contacto.IdContacto,
+                IdUsuario = contacto.IdUsuario,
+                Nombres = contacto.Nombres,
+                Telefono = contacto.Telefono,
+            };
+            _contactoRepository.Modify(contactoEntity);
         }
 
-        public ContactoDto Eliminar(string idUsuario, long idContacto)
+        public void Eliminar(long id)
         {
-            throw new NotImplementedException();
+            var contactoEntity = _contactoRepository.GetById(id);
+            if (contactoEntity == null)
+            {
+                throw new Exception("El contacto no existe");
+            }
+            _contactoRepository.Remove(contactoEntity)
         }
     }
 }
