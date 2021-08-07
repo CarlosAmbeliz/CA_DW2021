@@ -37,6 +37,14 @@ namespace DW.Infraestructura.Dao
             }
         }
 
+        public Usuario Login(string nombre, string contraseña)
+        {
+            using (DWEntities context = new DWEntities())
+            {
+                return context.Usuario.Where(x=> x.nombre == nombre & x.contraseña == contraseña).FirstOrDefault();
+            }
+        }
+
         public void Update(Usuario entity)
         {
             using (DWEntities context = new DWEntities())

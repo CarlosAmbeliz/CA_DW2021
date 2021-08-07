@@ -9,5 +9,6 @@ namespace DW.Dominio.Base
 {
     public interface IUsuarioRepository : ICrudRepository<UsuarioBo>
     {
+        UsuarioBo Login(string nombre, string contraseña);
     }
 }

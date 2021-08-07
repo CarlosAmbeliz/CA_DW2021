@@ -8,5 +8,8 @@ namespace DW.Aplicacion.Service.Dto
 {
     public class UsuarioDto
     {
+        public long IdUsuario { get; set; }
+        public string Nombre { get; set; }
+        public string Contraseña { get; set; }
     }
 }

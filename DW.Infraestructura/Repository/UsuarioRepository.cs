@@ -1,5 +1,7 @@
 ﻿using DW.Dominio.Base;
 using DW.Dominio.Entidades;
+using DW.Infraestructura.Base;
+using DW.Infraestructura.Dao;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,24 +12,66 @@ namespace DW.Infraestructura.Repository
 {
     public class UsuarioRepository : IUsuarioRepository
     {
+        private IUsuarioDao _usuarioDao;
+        public UsuarioRepository()
+        {
+            _usuarioDao = new UsuarioDao();
+        }
+
         public IEnumerable<UsuarioBo> GetAll()
         {
-            throw new NotImplementedException();
+            return _usuarioDao.GetAll().Select(usuario=> new UsuarioBo()
+            {
+                Id = usuario.id_usuario,
+                Contraseña = usuario.contraseña,
+                Nombre = usuario.nombre,
+            }).ToList();
+        }
+
+        public UsuarioBo Login(string nombre, string contraseña)
+        {
+            var usuario = _usuarioDao.Login(nombre, contraseña);
+            if (usuario == null)
+            {
+                throw new Exception("Usuario inválido");
+            }
+            return new UsuarioBo()
+            {
+                Id = usuario.id_usuario,
+                Contraseña = usuario.contraseña,
+                Nombre = usuario.nombre,
+            };
         }
 
         public void Modify(UsuarioBo entity)
         {
-            throw new NotImplementedException();
+            _usuarioDao.Update(new Models.Usuario()
+            {
+                contraseña = entity.Contraseña,
+                nombre = entity.Nombre,
+            });
         }
 
         public void Remove(UsuarioBo entity)
         {
-            throw new NotImplementedException();
+            _usuarioDao.Delete(new Models.Usuario()
+            {
+                contraseña = entity.Contraseña,
+                nombre = entity.Nombre,
+                id_usuario = entity.Id,
+            });
         }
 
         public UsuarioBo Save(UsuarioBo entity)
         {
-            throw new NotImplementedException();
+            var usuario =_usuarioDao.Insert(new Models.Usuario()
+            {
+                contraseña = entity.Contraseña,
+                nombre = entity.Nombre,
+                id_usuario = entity.Id,
+            });
+            entity.Id = usuario.id_usuario;
+            return entity;
         }
     }
 }

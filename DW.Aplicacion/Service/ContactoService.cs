@@ -1,4 +1,6 @@
 ﻿using DW.Aplicacion.Service.Dto;
+using DW.Dominio.Base;
+using DW.Infraestructura.Repository;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +11,11 @@ namespace DW.Aplicacion.Service
 {
     public class ContactoService
     {
+        private IContactoRepository _contactoRepository;
+        public ContactoService()
+        {
+            _contactoRepository = new ContactoRepository();
+        }
         public ContactoDto ObtenerTodos(long idUsuario)
         {
             throw new NotImplementedException();
