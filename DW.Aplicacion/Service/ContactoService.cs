@@ -72,7 +72,7 @@ namespace DW.Aplicacion.Service
             {
                 throw new Exception("El contacto no existe");
             }
-            _contactoRepository.Remove(contactoEntity)
+            _contactoRepository.Remove(contactoEntity);
         }
     }
 }
