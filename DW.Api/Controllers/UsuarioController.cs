@@ -16,7 +16,7 @@ namespace DW.Api.Controllers
         {
             _usuarioService = new UsuarioService();
         }
-        // GET api/<controller>
+        [HttpGet]
         public UsuarioDto Login(string usuario, string contraseña)
         {
             return _usuarioService.Login(usuario, contraseña);
