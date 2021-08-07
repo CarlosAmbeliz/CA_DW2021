@@ -27,6 +27,14 @@ namespace DW.Infraestructura.Dao
             }
         }
 
+        public Usuario GetByNombre(string nombre)
+        {
+            using (DWEntities context = new DWEntities())
+            {
+                return context.Usuario.Where(x => x.nombre.ToUpper() == nombre.ToUpper()).FirstOrDefault();
+            }
+        }
+
         public Usuario Insert(Usuario entity)
         {
             using (DWEntities context = new DWEntities())
@@ -41,7 +49,7 @@ namespace DW.Infraestructura.Dao
         {
             using (DWEntities context = new DWEntities())
             {
-                return context.Usuario.Where(x=> x.nombre == nombre & x.contraseña == contraseña).FirstOrDefault();
+                return context.Usuario.Where(x=> x.nombre.ToUpper() == nombre.ToUpper() & x.contraseña == contraseña).FirstOrDefault();
             }
         }
 

@@ -10,5 +10,6 @@ namespace DW.Infraestructura.Base
     public interface IUsuarioDao : ICrudDao<Usuario>
     {
         Usuario Login(string nombre, string contraseña);
+        Usuario GetByNombre(string nombre);
     }
 }

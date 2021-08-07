@@ -18,8 +18,12 @@ namespace DW.Test
         public void CrearUsuario()
         {
             _userService.Registrar("carlos", "1234");
-            _userService.Login("carlos", "1234");
             
+        }
+        [TestMethod]
+        public void Login()
+        {
+            _userService.Login("carlos", "1234");
         }
     }
 }

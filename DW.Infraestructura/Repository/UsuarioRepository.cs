@@ -28,19 +28,40 @@ namespace DW.Infraestructura.Repository
             }).ToList();
         }
 
+        public UsuarioBo GetByNombre(string nombre)
+        {
+            var usuario = _usuarioDao.GetByNombre(nombre);
+            if (usuario != null)
+            {
+                return new UsuarioBo()
+                {
+                    Id = usuario.id_usuario,
+                    Contraseña = usuario.contraseña,
+                    Nombre = usuario.nombre,
+                };
+            }
+            else
+            {
+                return null;
+            }
+         
+        }
+
         public UsuarioBo Login(string nombre, string contraseña)
         {
             var usuario = _usuarioDao.Login(nombre, contraseña);
-            if (usuario == null)
+            if (usuario != null)
             {
-                throw new Exception("Usuario inválido");
+                return new UsuarioBo()
+                {
+                    Id = usuario.id_usuario,
+                    Contraseña = usuario.contraseña,
+                    Nombre = usuario.nombre,
+                };
             }
-            return new UsuarioBo()
-            {
-                Id = usuario.id_usuario,
-                Contraseña = usuario.contraseña,
-                Nombre = usuario.nombre,
-            };
+            else 
+            { return null; }
+          
         }
 
         public void Modify(UsuarioBo entity)

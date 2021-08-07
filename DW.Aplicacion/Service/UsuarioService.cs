@@ -20,6 +20,10 @@ namespace DW.Aplicacion.Service
         public UsuarioDto Login(string usuario, string contraseña)
         {
             var usuarioEntity = _usuarioRepository.Login(usuario, contraseña);
+            if (usuarioEntity == null)
+            {
+                throw new Exception("Usuario inválido");
+            }
             return new UsuarioDto()
             {
                 IdUsuario = usuarioEntity.Id,
@@ -29,12 +33,16 @@ namespace DW.Aplicacion.Service
 
         public UsuarioDto Registrar(string usuario, string contraseña)
         {
+            if (_usuarioRepository.GetByNombre(usuario) != null)
+            {
+                throw new Exception("El usuario ya se encuentra registrado");
+            }
             UsuarioBo usuarioEntity = new UsuarioBo()
             {
                 Nombre = usuario,
                 Contraseña = contraseña,
             };
-             _usuarioRepository.Save(usuarioEntity);
+            _usuarioRepository.Save(usuarioEntity);
             return new UsuarioDto()
             {
                 IdUsuario = usuarioEntity.Id,
