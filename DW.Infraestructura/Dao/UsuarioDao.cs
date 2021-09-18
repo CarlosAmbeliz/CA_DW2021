@@ -14,7 +14,7 @@ namespace DW.Infraestructura.Dao
         {
             using (DWEntities context = new DWEntities())
             {
-                context.Usuario.Remove(entity);
+                context.Usuario.Remove(context.Usuario.Find(entity.id_usuario));
                 context.SaveChanges();
             }
         }
@@ -49,7 +49,7 @@ namespace DW.Infraestructura.Dao
         {
             using (DWEntities context = new DWEntities())
             {
-                return context.Usuario.Where(x=> x.nombre.ToUpper() == nombre.ToUpper() & x.contraseña == contraseña).FirstOrDefault();
+                return context.Usuario.Where(x => x.nombre.ToUpper() == nombre.ToUpper() & x.contraseña == contraseña).FirstOrDefault();
             }
         }
 

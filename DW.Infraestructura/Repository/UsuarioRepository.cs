@@ -68,6 +68,7 @@ namespace DW.Infraestructura.Repository
         {
             _usuarioDao.Update(new Models.Usuario()
             {
+                id_usuario = entity.Id,
                 contraseña = entity.Contraseña,
                 nombre = entity.Nombre,
             });

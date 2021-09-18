@@ -16,11 +16,33 @@ namespace DW.Api.Controllers
         {
             _usuarioService = new UsuarioService();
         }
-        [HttpGet]
-        public UsuarioDto Login(string usuario, string contraseña)
+
+        [Route("api/Usuario/Login")]
+        [HttpPost]
+        public UsuarioDto Login(UsuarioDto usuario)
         {
-            return _usuarioService.Login(usuario, contraseña);
+            return _usuarioService.Login(usuario.Nombre, usuario.Contraseña);
         }
 
+        [Route("api/Usuario/Registrar")]
+        [HttpPost]
+        public UsuarioDto Registrar(UsuarioDto usuario)
+        {
+            return _usuarioService.Registrar(usuario.Nombre, usuario.Contraseña);
+        }
+
+        [Route("api/Usuario/cambiarContraseña")]
+        [HttpPut]
+        public UsuarioDto CambiarContraseña(UsuarioCambioContraseñaDto usuario)
+        {
+            return _usuarioService.CambiarContraseña(usuario.Nombre , usuario.ContraseñaAnterior, usuario.ContraseñaNueva);
+        }
+
+        [Route("api/Usuario/eliminar")]
+        [HttpDelete]
+        public void Eliminar(UsuarioDto usuario)
+        {
+             _usuarioService.Eliminar(usuario.Nombre , usuario.Contraseña);
+        }
     }
 }

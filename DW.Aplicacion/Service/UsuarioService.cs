@@ -28,6 +28,7 @@ namespace DW.Aplicacion.Service
             {
                 IdUsuario = usuarioEntity.Id,
                 Nombre = usuarioEntity.Nombre,
+                Contraseña = usuarioEntity.Contraseña,
             };
         }
 
@@ -53,12 +54,17 @@ namespace DW.Aplicacion.Service
         public UsuarioDto CambiarContraseña(string usuario, string contraseñaAnterior, string contraseñaNueva)
         {
             var usuarioEntity = _usuarioRepository.Login(usuario, contraseñaAnterior);
+            if (usuarioEntity == null)
+            {
+                throw new Exception("La contraseña anterior no es válida");
+            }
             usuarioEntity.Contraseña = contraseñaNueva;
             _usuarioRepository.Modify(usuarioEntity);
             return new UsuarioDto()
             {
                 IdUsuario = usuarioEntity.Id,
                 Nombre = usuarioEntity.Nombre,
+                Contraseña = usuarioEntity.Contraseña,
             };
         }
 
